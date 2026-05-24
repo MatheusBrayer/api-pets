@@ -3,6 +3,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import {pets} from './pets.js';
 import {randomUUID} from 'crypto';
+import { validacaoPet } from './middlewares.js';
 
 dotenv.config();
 
@@ -67,7 +68,7 @@ app.get('/pets/:id', (req, res) => {
 
 // Cadastrar novo pet
 //POST /pets
-app.post('/pets', (req, res) => {
+app.post('/pets',[validacaoPet], (req, res) => {
     try {
         //Entrada de dados do corpo da requisição
         const {nome, raca, idade, nomeTutor} = req.body;
@@ -102,7 +103,7 @@ app.post('/pets', (req, res) => {
 
 // Atualizar pet por ID
 //PUT /pets/:id
-app.put("/pets/:id", (req, res) => {
+app.put("/pets/:id",[validacaoPet], (req, res) => {
     try {
         const {id} = req. params;
         const {nome, raca, idade, nomeTutor} = req.body;
